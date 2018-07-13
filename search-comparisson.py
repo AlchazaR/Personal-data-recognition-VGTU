@@ -83,7 +83,7 @@ def boyer_moore_horspool(text, pattern):
 
 
 
-content = "12312541231"
+content = "12312523423441231"
 needle = "31"
 results = boyer_moore_horspool(content, needle)
  
