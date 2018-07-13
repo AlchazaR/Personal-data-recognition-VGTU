@@ -55,7 +55,7 @@ def boyer_moore_horspool(text, pattern):
     # Create "bad matches" table (with a size of jump)
     # ord() - As input given "x" char. As output - integer representing the unicode
     T = {i: p_len for i in range(256)}  # table of 256 integers (each char represents as unique integer in unicode)
-    for i, char in enumerate(needle):
+    for i, char in enumerate(pattern):
         T[ord(char)] = p_len - i - 1
  
     # Step 2: Search pattern in the text
@@ -80,11 +80,18 @@ def boyer_moore_horspool(text, pattern):
  
     return results
 
+def file_len(fname):
+    with open(fname) as f:
+        for i in enumerate(f):
+            pass
+    return i + 1
 
-
-
-content = "12312523423441231"
-needle = "31"
-results = boyer_moore_horspool(content, needle)
- 
-print(results)
+if __name__ == '__main__':
+    fh = open('text_sources/test-list.txt', 'r')     
+    for line in fh:
+        print("Looking for word - " + line)
+        with open('text_sources/wiki-straipsnis.txt', 'r') as textFile:
+                content=textFile.read().replace('\n', '')
+        results = boyer_moore_horspool(content, line)
+        print("Found " + results)
+    fh.close()
