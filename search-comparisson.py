@@ -1,3 +1,8 @@
+import time
+import sys
+import string
+#import ahocorasick
+
 """ Boyer Moore string search algorithm """
 class last_occurrence(object):
     """Last occurrence functor."""
@@ -41,65 +46,115 @@ def boyer_moore_match(text, pattern):
 
 
 """ Horspool string search algorithm """
-def boyer_moore_horspool(text, pattern):
-    '''
-    :param text: (string)
-    :param pattern: (string)
-    :return: list of indexes where full match occurs
-    '''
-    t_len = len(text)
-    p_len = len(pattern)
-    results = []
- 
-    # Step 1: Preprocess the data
-    # Create "bad matches" table (with a size of jump)
-    # ord() - As input given "x" char. As output - integer representing the unicode
-    T = {i: p_len for i in range(256)}  # table of 256 integers (each char represents as unique integer in unicode)
-    for i, char in enumerate(needle):
-        T[ord(char)] = p_len - i - 1
- 
-    # Step 2: Search pattern in the text
-    i = 0
- 
-    while i <= t_len - p_len:
-        skip = 0
-        text_part = text[i:i + p_len][::-1]
- 
-        # Iterate over reversed part of text (from right to left)
-        for j, current_char in enumerate(text_part):
-            # Mismatch found, now we can jump through several indexes
-            if pattern[p_len - j - 1] != current_char:
-                skip = T[ord(current_char)]
-                break
- 
-        # Finally if we found complete match, we should add its index to results list
-        else:
-            results.append(i)
-            skip = 1
-        i += skip
- 
-    return results
+# preprocess - initialize occ
+def preprocess(pattern):
+    occ = dict.fromkeys(string.ascii_lowercase, -1)
+    for i in range(0,len(pattern)-1):
+        occ[pattern[i]] = i
+    return occ
 
-def file_len(fname):
-    with open(fname) as f:
-        for i in enumerate(f):
-            pass
-    return i + 1
+# seach - find string with horspool
+def horspool_search(text,pattern,occ):
+    found = 0
+    i = 0
+    m = len(pattern)
+    n = len(text)
+
+    while i <= n-m:
+        j = m-1
+        while j >= 0 and pattern[j] == text[i+j]:
+            j = j-1
+        if j < 0:
+            found = found+1
+            print("found!")
+        i = i + m-1
+        i = i - occ[text[i]]
+    return found
+
+""" Knutt-Morris-Pratt """
+def kmp_search(text, pattern):
+    d = {0:0}
+    template = pattern + '#' + text
+    for i in xrange(1,len(template)):
+        j = d[i-1]
+        while j > 0 and template[j] <> template[i]:
+            j = d[j-1]
+        if template[j] == template[i]:
+            j += 1
+        d[i] = j
+        if j == len(pattern):
+            return i
+    return None 
+
+def string_search(text, pattern):
+    i=j=0
+    lengthS = len(text)
+    lengthX = len(pattern)
+    while i<=lengthS - lengthX and j>lengthX:
+     
+        if li[i+j]==x[j]:
+            j+=1
+        
+        else:
+            i+=1
+            j=0
+    
+    return i if j==lengthX else None
 
 if __name__ == '__main__':
     fh = open('text_sources/test-list.txt', 'r')     
-    """for line in fh:
-        print("Looking for word - " + line)
-        with open('text_sources/wiki-straipsnis.txt', 'r') as textFile:
-                content=textFile.read().replace('\n', '')
-        needle = "Algirdo"
-        results = boyer_moore_horspool(content, needle)
-        print("Found " + results) """
-    fh.close()
+    
+    """ Boyer Moore algorithm test """
+    start_time = time.time()
+    for line in fh:
+        pattern = ''.join(line)
+        print("Looking for word - " + pattern)
+        f = open('text_sources/wiki-straipsnis.txt', 'r')
+        text=f.read()
+        results = boyer_moore_match(text, pattern)
+        print(results)
+    print("Boyer More took --- %s seconds ---" % (time.time() - start_time))   
+    fh.close
+    
+    """ Horspool algorithm test """
+    """
+    fh = open('text_sources/test-list.txt', 'r')
+    start_time = time.time()
+    for line in fh:
+        pattern = ''.join(line)
+        print("Looking for word - " + pattern)
+        f = open('text_sources/wiki-straipsnis-test.txt', 'r')
+        occ = preprocess(pattern)
+        text=f.read()
+        results = horspool_search(text, pattern, occ)
+        print(results)
+    print("Horspool search took --- %s seconds ---" % (time.time() - start_time))   
+    fh.close""" 
 
-    #content = " musis buvo asd Algirdo jklsf lsjkf l."
-    f = open('text_sources/wiki-straipsnis-test.txt', 'r')
-    content=f.read()
-    needle = "Algirdo"
-    results = boyer_moore_horspool(content, needle)
-    print(results)
+    """ KMP algorithm test """
+    fh = open('text_sources/test-list.txt', 'r')
+    start_time = time.time()
+    for line in fh:
+        pattern = ''.join(line)
+        print("Looking for word - " + pattern)
+        f = open('text_sources/wiki-straipsnis.txt', 'r')
+        occ = preprocess(pattern)
+        text=f.read()
+        results = kmp_search(text, pattern)
+        print(results)
+    print("KMP search took --- %s seconds ---" % (time.time() - start_time))
+    fh.close
+
+    """ BruteForce algorithm test """
+    fh = open('text_sources/test-list.txt', 'r')
+    start_time = time.time()
+    for line in fh:
+        pattern = ''.join(line)
+        print("Looking for word - " + pattern)
+        f = open('text_sources/wiki-straipsnis.txt', 'r')
+        occ = preprocess(pattern)
+        text=f.read()
+        results = string_search(text, pattern)
+        print(results)
+    print("Brute Force search took --- %s seconds ---" % (time.time() - start_time))
+    fh.close
