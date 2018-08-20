@@ -1,6 +1,8 @@
 import time
 import sys
 import string
+from textblob import TextBlob
+from polyglot.text import Text
 #import ahocorasick
 
 """ Boyer Moore string search algorithm """
@@ -75,9 +77,9 @@ def horspool_search(text,pattern,occ):
 def kmp_search(text, pattern):
     d = {0:0}
     template = pattern + '#' + text
-    for i in xrange(1,len(template)):
+    for i in range(1,len(template)):
         j = d[i-1]
-        while j > 0 and template[j] <> template[i]:
+        while j > 0 and template[j] != template[i]:
             j = d[j-1]
         if template[j] == template[i]:
             j += 1
@@ -86,12 +88,11 @@ def kmp_search(text, pattern):
             return i
     return None 
 
-def string_search(text, pattern):
+"""def string_search(text, pattern):
     i=j=0
     lengthS = len(text)
     lengthX = len(pattern)
     while i<=lengthS - lengthX and j>lengthX:
-     
         if li[i+j]==x[j]:
             j+=1
         
@@ -99,20 +100,65 @@ def string_search(text, pattern):
             i+=1
             j=0
     
-    return i if j==lengthX else None
+    return i if j==lengthX else None """
+
+def string_search(text, search):
+    dText   = text.split()
+    dSearch = search.split()
+
+    found_word = 0
+
+    for text_word in dText:
+        for search_word in dSearch:
+            if search_word == text_word:
+                found_word += 1
+
+    if found_word == len(dSearch):
+        return len(dSearch)
+    else:
+        return None
+
 
 if __name__ == '__main__':
-    fh = open('text_sources/test-list.txt', 'r')     
+
+    """ Get personal data with Polyglot """
+    with open('text_sources/wiki-straipsnis.txt', 'r') as fh:
+        content = fh.read()
+    start_time = time.time()
+    text = Text(content)
+    found_data = text.entities
     
-    """ Boyer Moore algorithm test """
+    print("Polyglot found data: ")
+    print(found_data)
+    print("Polyglot search took --- %s seconds ---" % (time.time() - start_time))
+    fh.close 
+
+    """ BruteForce algorithm test """
+    fh = open('text_sources/test-list.txt', 'r')
     start_time = time.time()
     for line in fh:
         pattern = ''.join(line)
-        print("Looking for word - " + pattern)
+        #print("Looking for word - " + pattern)
+        f = open('text_sources/wiki-straipsnis.txt', 'r')
+        occ = preprocess(pattern)
+        text=f.read()
+        results = string_search(text, pattern)
+        if (results != None):
+            print(results)
+    print("Brute Force search took --- %s seconds ---" % (time.time() - start_time))
+    fh.close  
+    
+    """ Boyer Moore algorithm test """
+    fh = open('text_sources/test-list.txt', 'r')     
+    start_time = time.time()
+    for line in fh:
+        pattern = ''.join(line)
+        #print("Looking for word - " + pattern)
         f = open('text_sources/wiki-straipsnis.txt', 'r')
         text=f.read()
         results = boyer_moore_match(text, pattern)
-        print(results)
+        if (results != -1):
+            print(results)
     print("Boyer More took --- %s seconds ---" % (time.time() - start_time))   
     fh.close
     
@@ -136,25 +182,16 @@ if __name__ == '__main__':
     start_time = time.time()
     for line in fh:
         pattern = ''.join(line)
-        print("Looking for word - " + pattern)
+        #print("Looking for word - " + pattern)
         f = open('text_sources/wiki-straipsnis.txt', 'r')
         occ = preprocess(pattern)
         text=f.read()
         results = kmp_search(text, pattern)
-        print(results)
+        if (results != None):
+            print(results)
     print("KMP search took --- %s seconds ---" % (time.time() - start_time))
     fh.close
 
-    """ BruteForce algorithm test """
-    fh = open('text_sources/test-list.txt', 'r')
-    start_time = time.time()
-    for line in fh:
-        pattern = ''.join(line)
-        print("Looking for word - " + pattern)
-        f = open('text_sources/wiki-straipsnis.txt', 'r')
-        occ = preprocess(pattern)
-        text=f.read()
-        results = string_search(text, pattern)
-        print(results)
-    print("Brute Force search took --- %s seconds ---" % (time.time() - start_time))
-    fh.close
+    
+
+
