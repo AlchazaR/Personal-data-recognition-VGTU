@@ -4,7 +4,7 @@ import platform
 import hashlib
 
 
-rootPath = r'C:\Docs\Mokslai\BD\prototipas\test dir'
+rootPath = r'/home/vlad/Documents/Repo/python_string-search/text_sources/'
 searchExt = [".doc", ".docx", ".xls", ".xlsx", ".pdf", ".txt"]
 os.chdir(rootPath)
 
@@ -20,7 +20,7 @@ class FileData:
         """
         blocksize=2**20
         m = hashlib.md5()
-        with open( os.path.join(fPath) , "rb" ) as f:
+        with open( os.path.join(dfName) , "rb" ) as f:
             while True:
                 buf = f.read(blocksize)
                 if not buf:
@@ -54,7 +54,10 @@ def getFileMetaData (fPath):
 
 
 
-if __name__ == '__main__':
+
+
+def get_files(rootPath=r'C:\Docs\Mokslai\BD\prototipas\test dir'):
+    files=[]
     for dirname, dirnames, filenames in os.walk(rootPath):
         # exclude these directories from search
         if 'Windows' in dirnames:
@@ -68,11 +71,17 @@ if __name__ == '__main__':
         if 'App64' in dirnames:
             dirnames.remove('App64')
 
-        # print path to all found filenames and file hash
+        # get path to all found filenames and file hash
+        
         for filename in filenames:
             if filename.endswith(tuple(searchExt)): 
                 fPath = storeFile(dirname, filename)
                 file = FileData(fPath)
-                print (file.name, file.dfHash)
+                file_data = [file.name, file.dfHash]
+                files.append(file_data)
+    return(files)
                 
-                
+
+if __name__ == '__main__':
+    files = get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
+    print(files)

@@ -3,7 +3,12 @@ import sys
 import string
 from textblob import TextBlob
 from polyglot.text import Text
-#import ahocorasick
+import pymongo
+from pymongo import MongoClient
+
+import file_scanner
+import file_to_db
+
 
 """ Boyer Moore string search algorithm """
 class last_occurrence(object):
@@ -122,19 +127,28 @@ def string_search(text, search):
 if __name__ == '__main__':
 
     """ Get personal data with Polyglot """
-    with open('text_sources/wiki-straipsnis.txt', 'r') as fh:
-        content = fh.read()
+    # get files using file_scanner
+    files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
+    
+    for found_file in files: 
+        # compare hashes of found files
+        # if there are changes - scan them for personal data
+        file_to_db.add_file_to_db(found_file.fPath, found_file.fHash)
+        with open('text_sources/wiki-straipsnis.txt', 'r') as fh:
+            content = fh.read()
     start_time = time.time()
     text = Text(content)
     print("Polyglot search took --- %s seconds ---" % (time.time() - start_time))
     fh.close
 
     # get only personal data
+    client = MongoClient('localhost', 27017)
     for entity in text.entities:
         if entity.tag == 'I-PER':
             print(entity)
+            db = client.names_list
 
-        # save data to DB
+        # save data to DB (MongoDB)
 
     """ BruteForce algorithm test """
     fh = open('text_sources/test-list.txt', 'r')
