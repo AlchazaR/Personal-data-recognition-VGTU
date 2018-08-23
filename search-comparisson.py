@@ -127,7 +127,14 @@ if __name__ == '__main__':
     start_time = time.time()
     text = Text(content)
     print("Polyglot search took --- %s seconds ---" % (time.time() - start_time))
-    fh.close 
+    fh.close
+
+    # get only personal data
+    for entity in text.entities:
+        if entity.tag == 'I-PER':
+            print(entity)
+
+        # save data to DB
 
     """ BruteForce algorithm test """
     fh = open('text_sources/test-list.txt', 'r')
