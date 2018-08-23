@@ -133,22 +133,23 @@ if __name__ == '__main__':
     for found_file in files: 
         # compare hashes of found files
         # if there are changes - scan them for personal data
-        file_to_db.add_file_to_db(found_file.fPath, found_file.fHash)
-        with open('text_sources/wiki-straipsnis.txt', 'r') as fh:
+        file_to_db.add_file_to_db(found_file[0], found_file[1])
+        
+        # read file
+        with open(found_file[0], 'r') as fh:
             content = fh.read()
-    start_time = time.time()
-    text = Text(content)
-    print("Polyglot search took --- %s seconds ---" % (time.time() - start_time))
-    fh.close
+        text = Text(content)
+        #print("Polyglot search took --- %s seconds ---" % (time.time() - start_time))
+        fh.close
 
-    # get only personal data
-    client = MongoClient('localhost', 27017)
-    for entity in text.entities:
-        if entity.tag == 'I-PER':
-            print(entity)
-            db = client.names_list
+        # get personal data
+        client = MongoClient('localhost', 27017)
+        for entity in text.entities:
+            if entity.tag == 'I-PER':
+                print(entity)
+            #db = client.names_list
 
-        # save data to DB (MongoDB)
+        # save found data to DB (MongoDB)
 
     """ BruteForce algorithm test """
     fh = open('text_sources/test-list.txt', 'r')
