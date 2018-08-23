@@ -126,10 +126,6 @@ if __name__ == '__main__':
         content = fh.read()
     start_time = time.time()
     text = Text(content)
-    found_data = text.entities
-    
-    print("Polyglot found data: ")
-    print(found_data)
     print("Polyglot search took --- %s seconds ---" % (time.time() - start_time))
     fh.close 
 
