@@ -144,9 +144,10 @@ if __name__ == '__main__':
             # get personal data
             for entity in text.entities:
                 if entity.tag == 'I-PER':
-                    print(entity)
+                    #print(entity)
                     # save found data to DB (MongoDB)
-                    file_to_db.add_names(found_file[0], entity)
+                    strNames = ' '.join(entity)
+                    file_to_db.add_names(found_file[0], strNames)
             
             # set the date of last file scan for personal data
             #file_to_db.set_date(found_file[0])

@@ -3,6 +3,23 @@ from pymongo import MongoClient
 import datetime
 
 """
+    Database info:
+        Show databases: show dbs
+        Select database: use files_list
+        Drop Collection: db.files_data.drop()
+        Create index: db.files_data.ensureIndex({foundNames:'text'})
+        Search for text: db.files_data.find({$text:{$search:'Marija'}})
+    
+    DB structure:
+        "_id" : ObjectId("5b804f27e9ac19216e7364a7"),
+        "scanDate" : null,
+	    "filePath" : "/home/vlad/Documents/Repo/python_string-search/text_sources/wiki-straipsnis.txt",
+	    "fileHash" : "570700d955264296eed2bb905b65128e",
+	    "foundNames" : ["Name", "Name2"]
+
+"""
+
+"""
     Add found file and it hash to Database
 """
 def add_file_to_db(fPath, fHash):
@@ -17,7 +34,8 @@ def add_file_to_db(fPath, fHash):
             fileToChange = {'filePath':fPath}
             newData = {"$set":{
                 'fileHash':fHash, 
-                'scanDate':None}}
+                'scanDate':None,
+                'foundNames':''}}
             col.update_one(fileToChange, newData)
             return(True)
         else:
@@ -39,6 +57,9 @@ def add_names(fPath, names):
     col = db.files_data
     # find document
     if col.find({'filePath':fPath}).count() > 0:
+        names = names.strip('[]"')
+        names = names.replace(',', ';')
+        print(names)
         fileToChange = {'filePath':fPath}
         newData = {"$push":{
             'foundNames':names}}
