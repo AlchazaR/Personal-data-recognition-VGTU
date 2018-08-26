@@ -132,9 +132,11 @@ if __name__ == '__main__':
     
     for found_file in files: 
         # add found files to DB and compare theyr hashes
+        print(found_file)
         if file_to_db.add_file_to_db(found_file[0], found_file[1]):
             # file is not scanned for personala data
             # read file
+            
             with open(found_file[0], 'r') as fh:
                 content = fh.read()
             text = Text(content)

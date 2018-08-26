@@ -77,7 +77,8 @@ def get_files(rootPath=r'C:\Docs\Mokslai\BD\prototipas\test dir'):
             if filename.endswith(tuple(searchExt)): 
                 fPath = storeFile(dirname, filename)
                 file = FileData(fPath)
-                file_data = [file.name, file.dfHash]
+                fn, fExt = os.path.splitext(file.name)
+                file_data = [file.name, file.dfHash, fExt]
                 files.append(file_data)
     return(files)
                 

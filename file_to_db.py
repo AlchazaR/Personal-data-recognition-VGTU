@@ -19,6 +19,7 @@ import datetime
 
 """
 
+
 """
     Add found file and it hash to Database
 """
