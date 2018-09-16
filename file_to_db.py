@@ -4,11 +4,13 @@ import datetime
 
 """
     Database info:
+        Connect to mongo DB: mongo
         Show databases: show dbs
         Select database: use files_list
         Drop Collection: db.files_data.drop()
         Create index: db.files_data.ensureIndex({foundNames:'text'})
         Search for text: db.files_data.find({$text:{$search:'Marija'}})
+        show all data: db.files_data.find().pretty()
     
     DB structure:
         "_id" : ObjectId("5b804f27e9ac19216e7364a7"),
@@ -30,8 +32,10 @@ def add_file_to_db(fPath, fHash):
     # find document
     if col.find({'filePath':fPath}).count() > 0:
         # if document exists
+        print('Documents already exists in DB')
         if col.find({'fileHash':fHash, 'filePath':fPath}).count() < 1:
             # if hash different, update scanDate to None
+            print('Document edited, it will be scanned for personal data')
             fileToChange = {'filePath':fPath}
             newData = {"$set":{
                 'fileHash':fHash, 
@@ -43,6 +47,7 @@ def add_file_to_db(fPath, fHash):
             return(False)
     else:
         # if document not exists, insert it
+        print('New document')
         col.insert_one({
             'filePath':fPath, 
             'fileHash':fHash, 

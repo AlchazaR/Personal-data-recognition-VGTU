@@ -8,6 +8,7 @@ from pymongo import MongoClient
 
 import file_scanner
 import file_to_db
+import file_reader
 
 
 """ Boyer Moore string search algorithm """
@@ -132,19 +133,21 @@ if __name__ == '__main__':
     
     for found_file in files: 
         # add found files to DB and compare theyr hashes
-        print(found_file)
+        print('Adding ' + found_file[0] + ' to DataBase')
         if file_to_db.add_file_to_db(found_file[0], found_file[1]):
             # file is not scanned for personala data
             # read file
-            
-            with open(found_file[0], 'r') as fh:
-                content = fh.read()
+            print('Reading file contents')
+            fContent = file_reader.read_file_content(found_file[0], found_file[2])            
+            #with open(found_file[0], 'r') as fh:
+            #    content = fh.read()
             ##text = Text(content)
             #print("Polyglot search took --- %s seconds ---" % (time.time() - start_time))
-            fh.close
+            #fh.close
 
-            # get personal data
-            text = Text(content)
+            # get Named Entities data (names, surnames)
+            text = Text(fContent)
+            print('Reading N.E.')
             for entity in text.entities:
                 if entity.tag == 'I-PER':
                     #print(entity)
