@@ -139,11 +139,12 @@ if __name__ == '__main__':
             
             with open(found_file[0], 'r') as fh:
                 content = fh.read()
-            text = Text(content)
+            ##text = Text(content)
             #print("Polyglot search took --- %s seconds ---" % (time.time() - start_time))
             fh.close
 
             # get personal data
+            text = Text(content)
             for entity in text.entities:
                 if entity.tag == 'I-PER':
                     #print(entity)
