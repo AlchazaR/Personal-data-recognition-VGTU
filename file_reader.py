@@ -1,4 +1,6 @@
 import string
+import os
+import random
 # https://python-docx.readthedocs.io/en/latest/user/documents.html
 # pip install python-docx
 import docx
@@ -38,9 +40,11 @@ def read_txt(fPath):
 	fh.close
 	return(fText)
 
-	
+
 def read_doc(fPath):
-	return("DOC - " + fPath)
+	print("DOC - " + fPath)
+	tmpName = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(6))
+	
 	"""
 		https://stackoverflow.com/questions/16516044/is-it-possible-to-read-word-files-doc-docx-in-python
 		Yes it is possible. LibreOffice (at least) has a command line option to convert files that works a treat. Use that to convert the file to text. 
@@ -52,6 +56,23 @@ def read_doc(fPath):
 		This question (http://ask.libreoffice.org/en/question/14130/how-do-i-install-filters-for-the-soffice-command/) on using filters 
 		with soffice on ask.libreoffice.org (http://ask.libreoffice.org/en/question/14130) helped me.
 	"""
+	
+	ofCommand = 'soffice --headless --convert-to txt:Text ' + fPath + ' --outdir /tmp/' + tmpName
+	
+	os.system(ofCommand)
+	fName = os.path.basename(fPath)
+	fName = fName.rsplit( ".", 1 )[0]
+	
+	with open('/tmp/' + tmpName + '/' + fName + '.txt', 'r') as fh:
+		content = fh.read()
+
+	fText = content
+	fh.close
+	# cleanup temporary files
+	os.remove('/tmp/' + tmpName + '/' + fName + '.txt')
+	os.rmdir('/tmp/' + tmpName)
+	
+	return(fText)
 
 	
 def read_docx(fPath):
@@ -74,16 +95,17 @@ def read_xls(fPath):
 	
 def read_pdf(fPath):
 	print("PDF - " + fPath)
-	# If it's scanned file, PyPDF2 will not find any words in it
-	# In this case OCR is needed
-	"""if fText != "":
-		fText = fText
-	else:
-		fText = textract.process(fPath, method='tesseract', language='eng')"""
+	
 	try:
 		fText = textract.process(fPath, encoding = 'utf-8') #encoding = 'unicode_escape')
 	except UnicodeDecodeError:
 		return('File', fPath, 'cannot be extracted! - skipped')
+	# If it's scanned file, PyPDF2 will not find any words in it
+	# In this case OCR is needed
+	if fText != "":
+		fText = fText
+	else:
+		fText = textract.process(fPath, method='tesseract', language='lit')
 	return(fText)
 
 	
@@ -95,4 +117,5 @@ if __name__ == '__main__':
 	#print(read_file_content("C:\\Docs\\temp\\test.pdf", ".pdf"))
 
 	#print(read_file_content("C:\\Docs\\temp\\v9.xls", ".xls"))
-    print(read_file_content('/home/vlad/Documents/Repo/python_string-search/text_sources/Referatas.pdf', '.pdf'))
+    #print(read_file_content('/home/vlad/Documents/Repo/python_string-search/text_sources/img_test.pdf', '.pdf'))
+	print(read_file_content('/home/vlad/Documents/Repo/python_string-search/text_sources/test.doc', '.doc'))
