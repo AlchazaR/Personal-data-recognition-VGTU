@@ -42,7 +42,7 @@ def boyer_moore_match(text, pattern):
     while i < n:
         if text[i] == pattern[j]:
             if j == 0:
-                return i
+                return text[i]
             else:
                 i -= 1
                 j -= 1
@@ -139,11 +139,6 @@ if __name__ == '__main__':
             # read file
             print('Reading file contents')
             fContent = file_reader.read_file_content(found_file[0], found_file[2])            
-            #with open(found_file[0], 'r') as fh:
-            #    content = fh.read()
-            ##text = Text(content)
-            #print("Polyglot search took --- %s seconds ---" % (time.time() - start_time))
-            #fh.close
 
             # get Named Entities data (names, surnames)
             text = Text(fContent)
@@ -155,11 +150,24 @@ if __name__ == '__main__':
                     strNames = ' '.join(entity)
                     file_to_db.add_names(found_file[0], strNames)
             
+            fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
+            #start_time = time.time()
+            #print("Boyer Moore search started...")
+           # for line in fh:
+            #    pattern = ''.join(line)
+                #print("Looking for word - " + pattern)
+             #   f = open('text_sources/wiki-straipsnis.txt', 'r')
+              #  text=f.read()
+             #   results = boyer_moore_match(text, pattern)
+              #  if (results != -1):
+               #     print(results)
+            #print("Boyer More took --- %s seconds ---" % (time.time() - start_time))   
+            fh.close
             # set the date of last file scan for personal data
             #file_to_db.set_date(found_file[0])
 
     """ BruteForce algorithm test """
-    fh = open('text_sources/test-list.txt', 'r')
+    fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')
     start_time = time.time()
     for line in fh:
         pattern = ''.join(line)
@@ -174,8 +182,8 @@ if __name__ == '__main__':
     fh.close  
     
     """ Boyer Moore algorithm test """
-    fh = open('text_sources/test-list.txt', 'r')     
-    start_time = time.time()
+    fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
+    #start_time = time.time()
     for line in fh:
         pattern = ''.join(line)
         #print("Looking for word - " + pattern)
@@ -203,7 +211,7 @@ if __name__ == '__main__':
     fh.close""" 
 
     """ KMP algorithm test """
-    fh = open('text_sources/test-list.txt', 'r')
+    fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')
     start_time = time.time()
     for line in fh:
         pattern = ''.join(line)

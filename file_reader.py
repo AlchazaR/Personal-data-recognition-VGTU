@@ -26,6 +26,8 @@ def read_file_content(fPath, fExt):
 		fText = read_xls(fPath)
 	elif (fExt == '.pdf'):
 		fText = read_pdf(fPath)
+	elif (fExt == '.png'):
+		fText = read_img(fPath)
 	else: 
 		fText = show_error(fPath)
 	return(fText)
@@ -58,11 +60,11 @@ def read_doc(fPath):
 	"""
 	
 	ofCommand = 'soffice --headless --convert-to txt:Text ' + fPath + ' --outdir /tmp/' + tmpName
-	
+	#print("running OS command - " + ofCommand)
 	os.system(ofCommand)
 	fName = os.path.basename(fPath)
 	fName = fName.rsplit( ".", 1 )[0]
-	
+	#print("file opening: " + '/tmp/' + tmpName + '/' + fName + '.txt')
 	with open('/tmp/' + tmpName + '/' + fName + '.txt', 'r') as fh:
 		content = fh.read()
 
@@ -78,9 +80,10 @@ def read_doc(fPath):
 def read_docx(fPath):
 	print("DOCX - " + fPath)
 	doc = docx.Document(fPath)
-	fText = []
+	fList = []
 	for para in doc.paragraphs:
-		fText.append(para.text)
+		fList.append(para.text)
+	fText = ''.join(fList)
 	return(fText)
 
 	
@@ -108,6 +111,10 @@ def read_pdf(fPath):
 		fText = textract.process(fPath, method='tesseract', language='lit')
 	return(fText)
 
+def read_img(fPath):
+	print("IMG - " + fPath)
+	fText = textract.process(fPath, method='tesseract', language='lit')
+	return(fText)	
 	
 def show_error(fPath):
 	return("Unknown extension of file: ")
@@ -118,4 +125,5 @@ if __name__ == '__main__':
 
 	#print(read_file_content("C:\\Docs\\temp\\v9.xls", ".xls"))
     #print(read_file_content('/home/vlad/Documents/Repo/python_string-search/text_sources/img_test.pdf', '.pdf'))
-	print(read_file_content('/home/vlad/Documents/Repo/python_string-search/text_sources/test.doc', '.doc'))
+	#	print(read_file_content('/home/vlad/Documents/Repo/python_string-search/text_sources/test.doc', '.doc'))
+	print(read_file_content('/home/vlad/Documents/Repo/python_string-search/text_sources/test1.png', '.png'))

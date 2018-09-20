@@ -5,7 +5,7 @@ import hashlib
 
 
 rootPath = r'/home/vlad/Documents/Repo/python_string-search/text_sources/'
-searchExt = [".doc", ".docx", ".xls", ".xlsx", ".pdf", ".txt"]
+searchExt = [".doc", ".docx", ".xls", ".xlsx", ".pdf", ".txt", ".png"]
 os.chdir(rootPath)
 
 class FileData:

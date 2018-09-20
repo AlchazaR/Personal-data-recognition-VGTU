@@ -65,7 +65,7 @@ def add_names(fPath, names):
     if col.find({'filePath':fPath}).count() > 0:
         names = names.strip('[]"')
         names = names.replace(',', ';')
-        print(names)
+        #print(names)
         fileToChange = {'filePath':fPath}
         newData = {"$push":{
             'foundNames':names}}
