@@ -1,6 +1,7 @@
 import time
 import sys
 import string
+import re
 from textblob import TextBlob
 from polyglot.text import Text
 import pymongo
@@ -143,14 +144,38 @@ if __name__ == '__main__':
             # get Named Entities data (names, surnames)
             text = Text(fContent)
             print('Reading N.E.')
+            personalData = ""
             for entity in text.entities:
                 if entity.tag == 'I-PER':
                     #print(entity)
                     # save found data to DB (MongoDB)
                     strNames = ' '.join(entity)
-                    file_to_db.add_names(found_file[0], strNames)
+                    personalData = personalData + " " + strNames
             
-            fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
+            # get personal ID numbers          
+            reText = '' . join(text)
+            print("Looking for personal ID's")
+            ids = re.findall(r'[2-6][0-9]{10}',reText)
+            ids = ' '.join(ids)
+            
+            # get e-mails
+            print("Looking for emails")
+            eMails = re.findall(r'\S+@\S+', reText)
+            eMails = ' '.join(eMails)
+
+            # get document number
+            print("Looking for document numbers")
+            docNr = re.findall(r'\s[0-9]{8}\s', reText)
+            docNr = ' '.join(docNr)
+            docNr = docNr.replace("\n", "")
+            
+            personalData = personalData + " " + ids + " " + eMails + " " + docNr
+            
+            # Save data to database
+            file_to_db.add_names(found_file[0],personalData)
+
+
+           # fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
             #start_time = time.time()
             #print("Boyer Moore search started...")
            # for line in fh:
@@ -162,12 +187,12 @@ if __name__ == '__main__':
               #  if (results != -1):
                #     print(results)
             #print("Boyer More took --- %s seconds ---" % (time.time() - start_time))   
-            fh.close
+          #  fh.close
             # set the date of last file scan for personal data
             #file_to_db.set_date(found_file[0])
 
     """ BruteForce algorithm test """
-    fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')
+    """  fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')
     start_time = time.time()
     for line in fh:
         pattern = ''.join(line)
@@ -179,10 +204,10 @@ if __name__ == '__main__':
         if (results != None):
             print(results)
     print("Brute Force search took --- %s seconds ---" % (time.time() - start_time))
-    fh.close  
+    fh.close """  
     
     """ Boyer Moore algorithm test """
-    fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
+    """  fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
     #start_time = time.time()
     for line in fh:
         pattern = ''.join(line)
@@ -193,7 +218,7 @@ if __name__ == '__main__':
         if (results != -1):
             print(results)
     print("Boyer More took --- %s seconds ---" % (time.time() - start_time))   
-    fh.close
+    fh.close """
     
     """ Horspool algorithm test """
     """
@@ -211,7 +236,7 @@ if __name__ == '__main__':
     fh.close""" 
 
     """ KMP algorithm test """
-    fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')
+    """ fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')
     start_time = time.time()
     for line in fh:
         pattern = ''.join(line)
@@ -223,7 +248,7 @@ if __name__ == '__main__':
         if (results != None):
             print(results)
     print("KMP search took --- %s seconds ---" % (time.time() - start_time))
-    fh.close
+    fh.close """
 
     
 
