@@ -4,7 +4,7 @@ import datetime
 
 """
     Database info:
-        Start MongoDB: mongodb
+        Start MongoDB: mongod
         Connect to mongo DB: mongo
         Show databases: show dbs
         Select database: use files_list

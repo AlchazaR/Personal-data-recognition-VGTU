@@ -134,37 +134,43 @@ if __name__ == '__main__':
     
     for found_file in files: 
         # add found files to DB and compare theyr hashes
-        print('Adding ' + found_file[0] + ' to DataBase')
+        #print('Adding ' + found_file[0] + ' to DataBase')
         if file_to_db.add_file_to_db(found_file[0], found_file[1]):
             # file is not scanned for personala data
             # read file
-            print('Reading file contents')
+            #print('Reading file ' + found_file[0] + ' contents')
+            foundNamesCount = 0
             fContent = file_reader.read_file_content(found_file[0], found_file[2])            
 
             # get Named Entities data (names, surnames)
             text = Text(fContent)
-            print('Reading N.E.')
+            #print('Reading N.E.')
             personalData = ""
+            # Start Polyglot-NER timer
+            start_time = time.time()
             for entity in text.entities:
                 if entity.tag == 'I-PER':
                     #print(entity)
                     # save found data to DB (MongoDB)
+                    foundNamesCount = foundNamesCount + 1 
                     strNames = ' '.join(entity)
                     personalData = personalData + " " + strNames
+            # Stop Polyglot-NER timer
+            finish_time = time.time() - start_time
             
             # get personal ID numbers          
             reText = '' . join(text)
-            print("Looking for personal ID's")
+            #print("Looking for personal ID's")
             ids = re.findall(r'[2-6][0-9]{10}',reText)
             ids = ' '.join(ids)
             
             # get e-mails
-            print("Looking for emails")
+            #print("Looking for emails")
             eMails = re.findall(r'\S+@\S+', reText)
             eMails = ' '.join(eMails)
 
             # get document number
-            print("Looking for document numbers")
+            #print("Looking for document numbers")
             docNr = re.findall(r'\s[0-9]{8}\s', reText)
             docNr = ' '.join(docNr)
             docNr = docNr.replace("\n", "")
@@ -174,6 +180,7 @@ if __name__ == '__main__':
             # Save data to database
             file_to_db.add_names(found_file[0],personalData)
 
+            print(' ### Found ' + str(foundNamesCount) + ' names in file ' + found_file[0] + '. Took ' + str(finish_time))
 
            # fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
             #start_time = time.time()
