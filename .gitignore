@@ -1,5 +1,5 @@
 # exclude everything
-text_sources/*
+#text_sources/*
 
 # exception to the rule
 !text_sources/.gitkeep 
