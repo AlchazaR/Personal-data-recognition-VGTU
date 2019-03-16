@@ -48,7 +48,7 @@ def add_file_to_db(fPath, fHash):
             return(False)
     else:
         # if document not exists, insert it
-        print('New document')
+        # print('New document')
         col.insert_one({
             'filePath':fPath, 
             'fileHash':fHash, 

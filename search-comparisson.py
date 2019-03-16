@@ -132,7 +132,7 @@ if __name__ == '__main__':
     # get files using file_scanner
     files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
     
-    for found_file in files: 
+    """for found_file in files: 
         # add found files to DB and compare theyr hashes
         #print('Adding ' + found_file[0] + ' to DataBase')
         if file_to_db.add_file_to_db(found_file[0], found_file[1]):
@@ -196,36 +196,55 @@ if __name__ == '__main__':
             #print("Boyer More took --- %s seconds ---" % (time.time() - start_time))   
           #  fh.close
             # set the date of last file scan for personal data
-            #file_to_db.set_date(found_file[0])
+            #file_to_db.set_date(found_file[0]) """
 
     """ BruteForce algorithm test """
-    """  fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')
-    start_time = time.time()
-    for line in fh:
-        pattern = ''.join(line)
-        #print("Looking for word - " + pattern)
-        f = open('text_sources/wiki-straipsnis.txt', 'r')
-        occ = preprocess(pattern)
-        text=f.read()
-        results = string_search(text, pattern)
-        if (results != None):
-            print(results)
-    print("Brute Force search took --- %s seconds ---" % (time.time() - start_time))
-    fh.close """  
+    """
+    files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
     
+    for found_file in files: 
+        fh = open('/home/vlad/Documents/Repo/python_string-search/tmp_text/vardai-pavardes.txt', 'r')
+        start_time = time.time()
+        foundNamesCount = 0
+        fContent = file_reader.read_file_content(found_file[0], found_file[2])
+        for line in fh:
+            pattern = ''.join(line)
+            #print("Looking for word - " + pattern)
+            
+            f = open('text_sources/wiki-straipsnis.txt', 'r')
+            occ = preprocess(pattern)
+            text=f.read()
+            
+            results = string_search(fContent, pattern)
+            if (results != None):
+                #print(results)
+                foundNamesCount += 1
+        print("File " + found_file[0] + " Brute Force search took --- %s seconds ---" % (time.time() - start_time) + " Found " + str(foundNamesCount))
+        fh.close 
+    """
+
     """ Boyer Moore algorithm test """
-    """  fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
+    files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
+    #fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
     #start_time = time.time()
-    for line in fh:
-        pattern = ''.join(line)
-        #print("Looking for word - " + pattern)
-        f = open('text_sources/wiki-straipsnis.txt', 'r')
-        text=f.read()
-        results = boyer_moore_match(text, pattern)
-        if (results != -1):
-            print(results)
-    print("Boyer More took --- %s seconds ---" % (time.time() - start_time))   
-    fh.close """
+    for found_file in files: 
+        fh = open('/home/vlad/Documents/Repo/python_string-search/tmp_text/vardai-pavardes.txt', 'r')
+        start_time = time.time()
+        foundNamesCount = 0
+        fContent = file_reader.read_file_content(found_file[0], found_file[2])
+        for line in fh:
+            pattern = ''.join(line)
+            #print("Looking for word - " + pattern)
+            """
+            f = open('text_sources/wiki-straipsnis.txt', 'r')
+            text=f.read()
+            """
+            results = boyer_moore_match(fContent, pattern)
+            if (results != -1):
+                #print(results)
+                foundNamesCount += 1
+        print("File " + found_file[0] + " Boyer More took --- %s seconds ---" % (time.time() - start_time) + " Found " + str(foundNamesCount))   
+        fh.close 
     
     """ Horspool algorithm test """
     """

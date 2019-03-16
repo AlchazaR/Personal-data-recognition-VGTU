@@ -2,4 +2,5 @@
 #text_sources/*
 
 # exception to the rule
-!text_sources/.gitkeep 
+!text_sources/.gitkeep
+!tmp_text 

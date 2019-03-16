@@ -34,7 +34,7 @@ def read_file_content(fPath, fExt):
 
 	
 def read_txt(fPath):
-	print("TXT - " + fPath)
+	# print("TXT - " + fPath)
 	with open(fPath, 'r') as fh:
 		content = fh.read()
 	#fText = Text(content)
