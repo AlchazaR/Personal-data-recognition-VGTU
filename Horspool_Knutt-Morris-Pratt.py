@@ -63,7 +63,7 @@ if __name__ == '__main__':
         print(str(i) + '. Horspool')
         for found_file in files:
             #def show_match(text, pattern):
-            #	print ('Text:  %s' % text)
+            #print ('Text:  %s' % text)
             fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r', encoding="utf8")
             foundNamesCount = 0
             fContent = file_reader.read_file_content(found_file[0], found_file[2])
@@ -74,6 +74,7 @@ if __name__ == '__main__':
                 pattern = ''.join(line)
                 pattern.replace('\n', '')
                 occ = preprocess(pattern)
+                #print("Searching for " + pattern + " in file " + found_file[0]) 
                 results = horspool_search(fContent, pattern, occ)
             #print ('Match: %s%s' % (*p, pattern))
             print('### Found ' + str(foundNamesCount) + ' names in file ' + found_file[0] + '. Took ' + str(time.time() - start_time))
