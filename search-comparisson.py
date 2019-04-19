@@ -6,6 +6,7 @@ from textblob import TextBlob
 from polyglot.text import Text
 import pymongo
 from pymongo import MongoClient
+from suffix_trees import STree
 
 import file_scanner
 import file_to_db
@@ -130,9 +131,9 @@ if __name__ == '__main__':
 
     """ Get personal data with Polyglot """
     # get files using file_scanner
-    files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
+    """files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
     
-    """for found_file in files: 
+    for found_file in files: 
         # add found files to DB and compare theyr hashes
         #print('Adding ' + found_file[0] + ' to DataBase')
         if file_to_db.add_file_to_db(found_file[0], found_file[1]):
@@ -175,7 +176,8 @@ if __name__ == '__main__':
             docNr = ' '.join(docNr)
             docNr = docNr.replace("\n", "")
             
-            personalData = personalData + " " + ids + " " + eMails + " " + docNr
+            #personalData = personalData + " " + ids + " " + eMails + " " + docNr
+            personalData = personalData + " "
             
             # Save data to database
             file_to_db.add_names(found_file[0],personalData)
@@ -199,8 +201,8 @@ if __name__ == '__main__':
             #file_to_db.set_date(found_file[0]) """
 
     """ BruteForce algorithm test """
-    """
-    files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
+    
+    """files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
     
     for found_file in files: 
         fh = open('/home/vlad/Documents/Repo/python_string-search/tmp_text/vardai-pavardes.txt', 'r')
@@ -211,20 +213,20 @@ if __name__ == '__main__':
             pattern = ''.join(line)
             #print("Looking for word - " + pattern)
             
-            f = open('text_sources/wiki-straipsnis.txt', 'r')
+            f = open('/home/vlad/Documents/Repo/python_string-search/text_sources/wiki-kvant-teorija_2.txt', 'r')
             occ = preprocess(pattern)
             text=f.read()
             
             results = string_search(fContent, pattern)
             if (results != None):
-                #print(results)
+                print(pattern)
                 foundNamesCount += 1
         print("File " + found_file[0] + " Brute Force search took --- %s seconds ---" % (time.time() - start_time) + " Found " + str(foundNamesCount))
-        fh.close 
-    """
+        fh.close """
+    
 
     """ Boyer Moore algorithm test """
-    files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
+    """files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
     #fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')     
     #start_time = time.time()
     for found_file in files: 
@@ -235,16 +237,16 @@ if __name__ == '__main__':
         for line in fh:
             pattern = ''.join(line)
             #print("Looking for word - " + pattern)
-            """
+            
             f = open('text_sources/wiki-straipsnis.txt', 'r')
             text=f.read()
-            """
+            
             results = boyer_moore_match(fContent, pattern)
             if (results != -1):
                 #print(results)
                 foundNamesCount += 1
         print("File " + found_file[0] + " Boyer More took --- %s seconds ---" % (time.time() - start_time) + " Found " + str(foundNamesCount))   
-        fh.close 
+        fh.close """
     
     """ Horspool algorithm test """
     """
@@ -276,6 +278,28 @@ if __name__ == '__main__':
     print("KMP search took --- %s seconds ---" % (time.time() - start_time))
     fh.close """
 
-    
 
+    """ Suffix tree algorithm test """
+    files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
+    
+    fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')
+    myList =''
+    for line in fh:
+        myList += ''.join(line)
+
+    myListT = tuple(myList)
+    
+    for found_file in files:
+        fh = open('/home/vlad/Documents/Repo/python_string-search/text_sources/vardai-pavardes.txt', 'r')
+        start_time = time.time()
+        myList =''
+        for line in fh:
+            myList += ''.join(line)
+
+        myListT = tuple(myList)         
+        fContent = file_reader.read_file_content(found_file[0], found_file[2])
+            
+        result = STree.STree(fContent)
+        #print(result.find_all(myListT))
+        print("File " + found_file[0] + " Suffix Tree search took --- %s seconds ---" % (time.time() - start_time) + " Found ")
 

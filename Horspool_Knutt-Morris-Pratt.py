@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 	# get files using file_scanner
     files = file_scanner.get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
-    for i in range(1, 6):
+    for i in range(6, 7):
         print(str(i) + '. Horspool')
         for found_file in files:
             #def show_match(text, pattern):
