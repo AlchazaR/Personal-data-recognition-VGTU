@@ -71,6 +71,7 @@ def add_names(fPath, names):
         newData = {"$push":{
             'foundNames':names}}
         col.update_one(fileToChange, newData)
+       
 
 """
     Set date of last file scan
@@ -82,8 +83,9 @@ def set_date(fPath):
     # find document
     if col.find({'filePath':fPath}).count() > 0:
         fileToChange = {'filePath':fPath}
+        currDate =  datetime.datetime.now()
         newDate = {"$set":{
-            'scanDate':datetime.datetime.now}}
+            'scanDate':currDate}}
         col.update_one(fileToChange, newDate)   
 
 if __name__ == '__main__':

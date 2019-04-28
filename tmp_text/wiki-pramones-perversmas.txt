@@ -1,0 +1,34 @@
+﻿Pramonės perversmo pradžia
+
+Pradžia perversmui buvo duota smulkiais išradimais Anglijos Lankašyro grafystėje, iš kurių bene svarbiausias – „Jenny“ verpimo mašinos išradimas (Jamesas Hargreavesas; patentuotas 1765 m., nors kojos buvo išlaisvintos, darbininkams jas tekdavo sukti rankomis). 1769 m. Richardas Arkwrightas pritaikė šiai mašinai varomąją jėgą, kas žymiai pagreitino jos darbą (pradžioje su vėjo energija, tad pirmasis fabrikas, kuriame buvo šių mašinų, pavadintas „Vėjo malūnas“, vėliau buvo varoma vandens energija; šioms mašinoms reikėjo statyti specialias patalpas su jėgos varomosiomis, taigi jos buvo stacionarios, skirtingai nei „Jenny“). Šie atradimai iš esmės ir tapo pagrindu mašinų raidai kitose srityse, bet jie pradėjo atpalaiduoti ir darbo jėgą.
+
+Greitaeigės šaudyklės su šovos įtaisu išradimas 1733 m. (John Kay) paspartino darbą audėjams, bet perversmas audimo srityje prasidėjo tik XVIII a. pabaigoje, kai Edmundas Cartwrightas 1785 m. sukonstravo pirmąsias mechanines audimo stakles, kurias 1792 m. dar patobulino. Visas audimo operacijas atlikdavo garo mašinos (labai patobulintos ir 1769 m. užpatentuotos Jameso Watto). Naujas žingsnis kuriant sudėtingas mašinas buvo žengtas Prancūzijoje, kur 1804 m. Liono tekstilės inžinierius Josephas Marie Jacquardas, tobulindamas ankstesnes audimo stakles, išrado stakles šilkui austi.
+
+Tačiau iš pradžių šios audimo mašinos nebuvo tokios efektyvios, kaip rankų darbas. Be to, garo jėgos ir mašinų plačiai naudoti nebuvo galimybės, kol nepradėta išgauti daugiau akmens anglies – efektyviausio kuro garui gauti. Daugelis tyrinėtojų pripažįsta, kad pirmoji moderni pramonės įmonė buvo 1761 m. Birmingeme Matthew Boultono įkurta Soho manufaktūra.
+
+Mašinų taikymas reikalavo keisti darbo organizavimą. Kai mašinų diegimas ir samdomasis darbas tapo visuotiniu, darbininkai į tai reagavo skausmingai. Jau 1779 m. 8 tūkst. darbininkų Anglijoje atakavo fabriką ir sudegino jį iki pamatų, sukildami prieš gerokai efektyvesnes mašinas. Apie 1811 m. tokie protestai prieš naują technologiją apėmė jau visą Angliją. Daužant fabrikus, buvo paskleisti gandai, kad minios veiksmams vadovavo karalius ar generolas Luddas, dėl ko judėjimą pavadino luditais.
+
+XIX a., kadangi medinės audimo staklės buvo nepakankamai tvirtos, imta gaminti metalines mašinas – tai skatino metalurgijos pramonės vystymą. Ieškant vis grynesnės ir tvirtesnės geležies, buvo vystoma ketaus ir plieno gamyba. 1856 m. seras Henry Bessemeras užpatentavo konverterinį plieno gamybos būdą. Nors iš pradžių jis buvo neparankus Vidurio Europos plieno pramonei, kadangi ten geležies rūda turėjo daug fosforo, ši problema buvo išspręsta 1870 m. Po to aukštos kokybės plienas galėjo būti lydomas daug pigiau ir gausiau. Plienas ne taip rūdijo kaip geležis, buvo patvaresnis ir lengviau apdorojamas, todėl jis buvo labai plačiai pritaikytas geležinkelio bėgiams tiesti, laivams, tiltams, dangoraižiams, traukiniams statyti, mašinoms gaminti. XIX a. 8 dešimtmetyje išradus elektrolitinį būdą, iš kriolito bei aliuminio oksido lydalo pradėtas gaminti aliuminis. 9 dešimtmetyje dėl alotropijos rinkoje pasirodė platus asortimentas aukštos kokybės lydinių, tinkamų įrankiams ir ginklams gaminti.
+Pramonės perversmo rezultatai
+
+Darbo pasidalijimas ir specializacija paskatino didžiulį našumo padidėjimą. Pasikeitusi technologija skatino pramonės koncentraciją, todėl vietoje amatininkų cechų atsirado fabrikai, kuriuose tinkamai mašinų veiklai palaikyti buvo įdarbinami tūkstančiai žmonių. Juose stengtasi gaminti greičiau ir pigiau, taikant darbo pasidalijimo principą: darbininkui teliko be paliovos kartoti elementarius judesius ir jis tapo tik didžiulės gamybinės sistemos sraigteliu.
+
+Pramonės perversmas taip pat skatino geografinę įmonių koncentraciją. Gamyklos buvo statomos prie anglies ir geležies kasyklų arba prie uostų, kad būtų arčiau importuoti būtinas žaliavas. Jos taip pat kūrėsi priemiesčiuose, kad nepritrūktų darbo jėgos bei rinkos produkcijai realizuoti. Mėginant spręsti didelių anglies kiekių gabenimo problemą, Europoje buvo sukonstruotas geležinkelis (1804 m. anglų inžinierius Richardas Trevithickas sukonstravo pirmąją bėgiais judančią garo slėgio varomą transporto mašiną).
+
+Išlaidos moksliniams tyrimams ir didžiulių investicijų būtinybė vertė įmones jungti savo kapitalus: tai gimdė finansinę koncentraciją. 
+
+
+###############
+https://lt.wikipedia.org/wiki/Pramon%C4%97s_perversmas
+###############
+Vardai-pavardes (10):
+Jamesas Hargreavesas
+Richardas Arkwrightas
+John Kay
+Edmundas Cartwrightas
+Jameso Watto
+Josephas Marie Jacquardas
+Matthew Boultono
+Luddas
+Henry Bessemeras
+Richardas Trevithickas

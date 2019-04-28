@@ -56,33 +56,38 @@ def getFileMetaData (fPath):
 
 
 
-def get_files(rootPath=r'C:\Docs\Mokslai\BD\prototipas\test dir'):
+#def get_files(rootPath=r'C:\Docs\Mokslai\BD\prototipas\test dir'):
+def get_files(listPath=r'/home/vlad/Documents/Repo/python_string-search/path.list'):
     files=[]
-    for dirname, dirnames, filenames in os.walk(rootPath):
-        # exclude these directories from search
-        if 'Windows' in dirnames:
-            dirnames.remove('Windows')
-        if 'Program files' in dirnames:
-            dirnames.remove('Program files')
-        if 'Program files (x86)' in dirnames:
-            dirnames.remove('Program Files (x86)')
-        if 'App32' in dirnames:
-            dirnames.remove('App32')
-        if 'App64' in dirnames:
-            dirnames.remove('App64')
+    fh = open(listPath, 'r')
+    for line in fh:
+        line=line.replace("\n", "")
+        os.chdir(line)
+        for dirname, dirnames, filenames in os.walk(line):
+            # exclude these directories from search
+            if 'Windows' in dirnames:
+                dirnames.remove('Windows')
+            if 'Program files' in dirnames:
+                dirnames.remove('Program files')
+            if 'Program files (x86)' in dirnames:
+                dirnames.remove('Program Files (x86)')
+            if 'App32' in dirnames:
+                dirnames.remove('App32')
+            if 'App64' in dirnames:
+                dirnames.remove('App64')
 
-        # get path to all found filenames and file hash
-        
-        for filename in filenames:
-            if filename.endswith(tuple(searchExt)): 
-                fPath = storeFile(dirname, filename)
-                file = FileData(fPath)
-                fn, fExt = os.path.splitext(file.name)
-                file_data = [file.name, file.dfHash, fExt]
-                files.append(file_data)
+            # get path to all found filenames and file hash
+            
+            for filename in filenames:
+                if filename.endswith(tuple(searchExt)): 
+                    fPath = storeFile(dirname, filename)
+                    file = FileData(fPath)
+                    fn, fExt = os.path.splitext(file.name)
+                    file_data = [file.name, file.dfHash, fExt]
+                    files.append(file_data)
     return(files)
                 
 
 if __name__ == '__main__':
-    files = get_files('/home/vlad/Documents/Repo/python_string-search/text_sources/')
+    files = get_files('/home/vlad/Documents/Repo/python_string-search/path.list')
     print(files)
